@@ -1,10 +1,29 @@
-buai_list=[0.2,0.05,0.1,0.15]
-uriage_list=[100000,200000,50000,350000]
-name_list=["moto","ryo","aya","miku"]
-for i in range(4):
-    buai=buai_list[i]
-    uriage=uriage_list[i]
-    name=name_list[i]
+
+staff_map={
+    "moto":{
+        "buai":0.2,
+        "uriage":100000,
+    },
+    "ryo":{
+        "buai":0.05,
+        "uriage":200000,
+    },
+    "aya":{
+        "buai":0.1,
+        "uriage":50000,
+    },
+    "miku":{
+        "buai":0.15,
+        "uriage":350000,
+    },
+
+}
+
+for name,value in staff_map.items():
+    
+    buai=value["buai"]
+    uriage=value["uriage"]
+    
     if name=="moto"or name=="ryo":
         buaikyuu=buai*uriage
     else:
