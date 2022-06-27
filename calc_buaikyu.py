@@ -4,7 +4,10 @@ name_list=["moto","ryo","aya","miku"]
 for i in range(4):
     buai=buai_list[i]
     uriage=uriage_list[i]
-    buaikyuu=buai*uriage
     name=name_list[i]
+    if name=="moto"or name=="ryo":
+        buaikyuu=buai*uriage
+    else:
+        buaikyuu=0
     print(name,"売上金額",uriage,"歩合率",buai,"歩合給",buaikyuu)
 
