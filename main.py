@@ -67,8 +67,10 @@ def calc_zikyu(staff_data):
     zikyukyuyo=zikyu*time
     return zikyukyuyo
 
-def calc_kihonkyu(staff_data):
-    return 200000
+def calc_kihonkyu(kihonkyu1,kihonkyu2):
+    kihonkyu=kihonkyu1*kihonkyu2
+    return kihonkyu
+    
 def calc_buaikyu(staff_data):
     buai=staff_data["buai"]
     uriage=staff_data["uriage"]
@@ -110,7 +112,9 @@ def calc_positionkyu(staff_data):
 
 
 def calc_gekyu(staff_data):
-    kihonkyu=calc_kihonkyu(staff_data)
+    kihonkyu1=450000
+    kihonkyu2=0.45
+    kihonkyu=calc_kihonkyu(kihonkyu1,kihonkyu2)
     buaikyu=calc_buaikyu(staff_data)
     rankkyu=calc_rankkyu(staff_data)
     positionkyu=calc_positionkyu(staff_data)
