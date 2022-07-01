@@ -70,7 +70,7 @@ def calc_zikyu(staff_data):
 def calc_kihonkyu(kihonkyu1,kihonkyu2):
     kihonkyu=kihonkyu1*kihonkyu2
     return kihonkyu
-    
+
 def calc_buaikyu(staff_data):
     buai=staff_data["buai"]
     uriage=staff_data["uriage"]
@@ -130,10 +130,16 @@ def calc_salary(staff_data):
         salary=calc_gekyu(staff_data)
     return salary 
 
+sum_salary=0
+
 for name in staff_map:
     sd=staff_map[name]
     salary=calc_salary(sd)
+    sum_salary=sum_salary+salary
+    #sum_salary+=salary
     print(name,salary)
+    
+print(sum_salary)
 
 
 
