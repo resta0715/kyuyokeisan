@@ -1,4 +1,4 @@
-
+import openpyxl
 resta_data={
     "resta":{
         "working_status":None,
@@ -181,6 +181,7 @@ def calc_percentage(resta_data):
 def calc_per_salary(resta_data):
     service_sale=resta_data["service_sale"]
     percentage=calc_percentage(resta_data)
+    print(service_sale,percentage)
     per_salary=service_sale*percentage
 
     return per_salary
@@ -250,10 +251,42 @@ def calc_salary(resta_data):
     
     return salary
 
-sum_salary=0
+def get_staff_map():
+    book = openpyxl.load_workbook("staff_list.xlsx")
+    print(len(book.sheetnames))
+    sheet=book.get_sheet_by_name('Sheet1')
+    resta_data={}
+    
+    for row in sheet.rows:
+        name=row[0].value
+        if name=="名前" or name==None:
+            continue
+        sd={
+            "name":row[0].value,
+            "working_status":row[2].value,
+            "rank":row[3].value,
+            "position":row[4].value,
+            "hire_date":row[5].value,
+            "time":row[6].value,
+            "zikyu":row[7].value,
+            "parking":row[8].value,
+            "社会保険":row[9].value,
+            "雇用保険":row[10].value,
+            "service_sale":row[11].value,
+            "product_sale":row[12].value,
+            "resta_service_sale":row[13].value,
+            "staff_number":row[14].value
 
+        }
+        resta_data[name]=sd
+    return resta_data     
+
+sum_salary=0
+resta_data=get_staff_map()
 for name in resta_data:
     sd=resta_data[name]
+    rank=sd["rank"]
+    #rank=resta_data[name]["rank"]  
     salary=calc_salary(sd)
 
     print(name,salary)
