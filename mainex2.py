@@ -1,5 +1,6 @@
 from msilib.schema import Error
 import openpyxl
+import math
 
 
 def calc_total_salary_hour(resta_data):
@@ -47,7 +48,7 @@ def calc_percentage(resta_data):
 def calc_per_salary(resta_data):
     service_sale=resta_data["service_sale"]
     percentage=calc_percentage(resta_data)
-    print(service_sale,percentage)
+    
     per_salary=service_sale*percentage
 
     return per_salary
@@ -145,17 +146,46 @@ def get_staff_map():
 
         }
         resta_data[name]=sd
-    return resta_data     
+    return resta_data 
+
+def calc_koyohoken(salary):
+    koyohoken=salary*0.003
+    
+    a=int(koyohoken)
+    b=koyohoken-int(koyohoken)
+
+  
+    if b<=0.5:
+        b=0
+    if 0.5<b:
+        b=1
+    
+    koyohoken=a+b
+    print(koyohoken)
+
+
+
+   
+    #少数部を取り出す
+    #　0.5以下はきりすて、0.5より大きかったら繰り上げ
+ 
+
+
 
 sum_salary=0
 resta_data=get_staff_map()
+
+
+
 for name in resta_data:
     sd=resta_data[name]
     rank=sd["rank"]
     #rank=resta_data[name]["rank"]  
     salary=calc_salary(sd)
 
-    print(name,salary)
+    koyohoken=salary*0.003
+
+    print(name,salary,round(koyohoken))
 
 
 
