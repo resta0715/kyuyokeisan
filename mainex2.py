@@ -1,3 +1,4 @@
+from msilib.schema import Error
 import openpyxl
 
 
@@ -16,29 +17,29 @@ def calc_percentage(resta_data):
     if productivity<500000:
         percentage=0.05
     
-    elif 500000<=productivity<600000:
+    elif 500000<=productivity and productivity<600000:
         percentage=0.06
     
-    elif 600000<=productivity<700000:
+    elif 600000<=productivity and productivity<700000:
         percentage=0.07
 
-    elif 700000<=productivity<800000:
+    elif 700000<=productivity and productivity<800000:
         percentage=0.08
 
-    elif 800000<=productivity<900000:
+    elif 800000<=productivity and productivity<900000:
         percentage=0.09
 
-    elif 900000<=productivity<1000000:
+    elif 900000<=productivity and productivity<1000000:
         percentage=0.1
 
-    elif 1000000<=productivity<1100000:
+    elif 1000000<=productivity and productivity<1100000:
         percentage=0.11
 
     elif 1100000<=productivity:
         percentage=0.12   
 
     else:
-        percentage=0.03
+        percentage=None
     
     return percentage
 
