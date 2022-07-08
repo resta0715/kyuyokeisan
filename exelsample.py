@@ -1,12 +1,21 @@
 import openpyxl
-book = openpyxl.load_workbook("Book1.xlsx")
+book = openpyxl.load_workbook("staff_list.xlsx")
 print(len(book.sheetnames))
 sheet=book.get_sheet_by_name('Sheet1')
 resta_data={}
+#i=0
 for row in sheet.rows:
+    #i+=1
+    # 一行目を読み飛ばす
+    #if i==1:
+       # continue
+    
     #print(row)
-    print(row[1].value)
+  
     name=row[0].value
+    if name=="名前" or name==None:
+        continue
+    
     sd={
         "name":row[0].value,
         "working_status":row[1].value,
