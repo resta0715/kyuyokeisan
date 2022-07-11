@@ -1,7 +1,6 @@
-from msilib.schema import Error
 import openpyxl
 import math
-
+import syakaihoken
 
 def calc_total_salary_hour(resta_data):
     time=resta_data["time"]
@@ -148,6 +147,8 @@ def get_staff_map():
         resta_data[name]=sd
     return resta_data 
 
+
+
 def calc_koyohoken(salary):
     koyohoken=salary*0.003
     
@@ -157,11 +158,12 @@ def calc_koyohoken(salary):
   
     if b<=0.5:
         b=0
-    if 0.5<b:
+    else:
         b=1
     
     koyohoken=a+b
-    print(koyohoken)
+    return koyohoken
+   
 
 
 
@@ -182,10 +184,10 @@ for name in resta_data:
     rank=sd["rank"]
     #rank=resta_data[name]["rank"]  
     salary=calc_salary(sd)
-
+    hokenryo,nenkin=syakaihoken.get_hokenryo(salary)
     koyohoken=salary*0.003
 
-    print(name,salary,round(koyohoken))
+    print(name,salary,round(koyohoken),hokenryo,nenkin)
 
 
 
