@@ -1,6 +1,7 @@
 import openpyxl
 import math
 import syakaihoken
+import gensen
 
 def calc_total_salary_hour(resta_data):
     time=resta_data["time"]
@@ -141,9 +142,12 @@ def get_staff_map():
             "service_sale":row[11].value,
             "product_sale":row[12].value,
             "resta_service_sale":row[13].value,
-            "staff_number":row[14].value
-
+            "staff_number":row[14].value,
+            "所属":row[15].value,
+            "扶養人数":row[16].value
+        
         }
+        
         resta_data[name]=sd
     return resta_data 
 
@@ -186,8 +190,11 @@ for name in resta_data:
     salary=calc_salary(sd)
     hokenryo,nenkin=syakaihoken.get_hokenryo(salary)
     koyohoken=salary*0.003
+    salarykoujyo=salary-hokenryo-nenkin-koyohoken
+    gensenryo=gensen.get_gensen(salarykoujyo,sd)
+        
 
-    print(name,salary,round(koyohoken),hokenryo,nenkin)
+    print(name,salary,round(koyohoken),hokenryo,nenkin,gensenryo)
 
 
 
