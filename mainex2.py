@@ -48,9 +48,9 @@ def calc_percentage(resta_data):
 
 def calc_per_salary(resta_data,uriage_data):
     service_sale=uriage_data["service_sale"]
-    
+    option_sale=uriage_data["option_sale"]
     percentage=calc_percentage(resta_data)
-    per_salary=service_sale*percentage
+    per_salary=(service_sale+option_sale)*percentage
     
     return per_salary
 
@@ -185,7 +185,14 @@ def merge_uriage(resta_uriage_monthly,react_uriage_monthly):
     
     for name in react_uriage_monthly:
         data=react_uriage_monthly[name]
-        uriage[name]=data
+        if name not in uriage:
+            uriage[name]=data
+        else:
+            uriage[name]["service_sale"]=uriage[name]["service_sale"]+data["service_sale"]
+            #uriage[name]["service_sale"]+=data["service_sale"]
+            uriage[name]["product_sale"]+=data["product_sale"]
+            uriage[name]["option_sale"]+=data["option_sale"]
+       
     
     return uriage
         
@@ -203,7 +210,10 @@ for name in resta_data:
     sd=resta_data[name]
     rank=sd["rank"]
         #rank=resta_data[name]["rank"]
-    uriage_data=merge_uriage_monthly[name]  
+    if name not in merge_uriage_monthly:
+        continue
+     
+    uriage_data=merge_uriage_monthly[name] 
     print(name,uriage_data)
     salary=calc_salary(sd,uriage_data)
     #todo 4,5,6月の給与をいれる
