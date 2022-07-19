@@ -2,6 +2,7 @@ import openpyxl
 import math
 import syakaihoken
 import gensen
+import uriage
 
 def calc_total_salary_hour(resta_data):
     time=resta_data["time"]
@@ -45,12 +46,12 @@ def calc_percentage(resta_data):
     return percentage
 
 
-def calc_per_salary(resta_data):
-    service_sale=resta_data["service_sale"]
-    percentage=calc_percentage(resta_data)
+def calc_per_salary(resta_data,uriage_data):
+    service_sale=uriage_data["service_sale"]
     
+    percentage=calc_percentage(resta_data)
     per_salary=service_sale*percentage
-
+    
     return per_salary
 
 
@@ -98,30 +99,29 @@ def calc_rank_salary(resta_data):
 
     
 
-def calc_total_salary(resta_data):
+def calc_total_salary(resta_data,uriage_data):
     basic_salary1=450000
     basic_salary2=0.45
     position_salary=calc_position_salary(resta_data)
-    per_salary=calc_per_salary(resta_data)
+    per_salary=calc_per_salary(resta_data,uriage_data)
     rank_salary=calc_rank_salary(resta_data)
     basic_salary=calc_basic_salary(basic_salary1,basic_salary2)
     total_salary=basic_salary+per_salary+rank_salary+position_salary
 
     return total_salary
 
-def calc_salary(resta_data):
+def calc_salary(resta_data,uriage_data):
     if resta_data["working_status"]=="hour":
         salary=calc_total_salary_hour(resta_data)
     
     else:
-        salary=calc_total_salary(resta_data)
+        salary=calc_total_salary(resta_data,uriage_data)
     
     return salary
 
 def get_staff_map():
     book = openpyxl.load_workbook("staff_list.xlsx")
-    print(len(book.sheetnames))
-    sheet=book.get_sheet_by_name('Sheet1')
+    sheet=book["Sheet1"]
     resta_data={}
     
     for row in sheet.rows:
@@ -180,19 +180,23 @@ def calc_koyohoken(salary):
 
 sum_salary=0
 resta_data=get_staff_map()
+uriage_data_monthly=uriage.get_uriage()
 
 
 
 for name in resta_data:
     sd=resta_data[name]
     rank=sd["rank"]
-    #rank=resta_data[name]["rank"]  
-    salary=calc_salary(sd)
-    hokenryo,nenkin=syakaihoken.get_hokenryo(salary)
+        #rank=resta_data[name]["rank"]
+    uriage_data=uriage_data_monthly[name]  
+    print(name,uriage_data)
+    salary=calc_salary(sd,uriage_data)
+    #todo 4,5,6月の給与をいれる
+    hokenryo,nenkin=syakaihoken.get_hokenryo(salary,salary,salary)
     koyohoken=salary*0.003
     salarykoujyo=salary-hokenryo-nenkin-koyohoken
     gensenryo=gensen.get_gensen(salarykoujyo,sd)
-        
+            
 
     print(name,salary,round(koyohoken),hokenryo,nenkin,gensenryo)
 
