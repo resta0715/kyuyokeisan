@@ -176,11 +176,26 @@ def calc_koyohoken(salary):
     #　0.5以下はきりすて、0.5より大きかったら繰り上げ
  
 
+def merge_uriage(resta_uriage_monthly,react_uriage_monthly):
+    uriage={}
+
+    for name in resta_uriage_monthly:
+        data=resta_uriage_monthly[name]
+        uriage[name]=data
+    
+    for name in react_uriage_monthly:
+        data=react_uriage_monthly[name]
+        uriage[name]=data
+    
+    return uriage
+        
 
 
 sum_salary=0
 resta_data=get_staff_map()
-uriage_data_monthly=uriage.get_uriage()
+resta_uriage_monthly=uriage.get_uriage("resta_uriage.csv")
+react_uriage_monthly=uriage.get_uriage("react_uriage.csv")
+merge_uriage_monthly=merge_uriage(resta_uriage_monthly,react_uriage_monthly)
 
 
 
@@ -188,7 +203,7 @@ for name in resta_data:
     sd=resta_data[name]
     rank=sd["rank"]
         #rank=resta_data[name]["rank"]
-    uriage_data=uriage_data_monthly[name]  
+    uriage_data=merge_uriage_monthly[name]  
     print(name,uriage_data)
     salary=calc_salary(sd,uriage_data)
     #todo 4,5,6月の給与をいれる
